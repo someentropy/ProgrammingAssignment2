@@ -1,15 +1,53 @@
-## Put comments here that give an overall description of what your
-## functions do
+###################################
+##  Solution to Assignment 2
+###################################  
+##  Functions are built to cache the
+##  results of the solve() function
+##  on a square matrix
+###################################  
 
-## Write a short comment describing this function
+##  Function set (list) to hold the matrix 
+##  and cache its inverse using solve()
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    inv <- NULL
+    
+    set <- function(yourMatrix) {
+        x <<- yourMatrix
+        inv <<- NULL
+    }
+    
+    get <- function() x 
+    
+    setInv <- function(solve) {
+        inv <<- solve
+    }
+    
+    getInv <- function() {
+        inv
+    }
+    
+    list(   
+        set = set, 
+        get = get,
+        setInv = setInv,
+        getInv = getInv
+    )
 }
 
-
-## Write a short comment describing this function
+##  Call against function list of type makeCacheMatrix
+##  to solve and cache a square matrix
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    inv <- x$getInv()
+    if (!is.null(inv)) {
+        message("getting cached data")
+        inv
+    }
+    
+    data <- x$get()
+    
+    inv <- solve(data, ...)
+    x$setInv(inv)
+    inv
 }
